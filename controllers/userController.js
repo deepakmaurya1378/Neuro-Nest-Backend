@@ -1,6 +1,7 @@
-const User = require("../models/User");
+const User = require("../models/User.js");
 const jwt = require("jsonwebtoken");
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const { trusted } = require("mongoose");
 
 const registerUser = async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -21,7 +22,7 @@ const registerUser = async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         maxAge: 3600000, 
       })
       .status(200)
@@ -80,13 +81,15 @@ const loginUser = async (req, res) => {
     }
 
     const payload = { user: { id: user.id } };
-    const token = jwt.sign(payload, process.env.jwtSecret, { expiresIn: "7d" });
+    const token = jwt.sign(payload, process.env.jwtSecret, { expiresIn: "1h" });
+
+    console.log("token = ", token);
 
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 3600000, // 1 hour
+        secure: true,
+        maxAge: 3600000, 
       })
       .status(200)
       .json({
