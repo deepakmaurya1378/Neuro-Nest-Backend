@@ -82,12 +82,12 @@ const loginUser = async (req, res) => {
       httpOnly: true,
       secure: true, 
       maxAge: 3600000, 
-      sameSite: "Strict",
+      sameSite: "strict",
       })
       .status(200)
       .json({
         message: "Login successful",
-        user: { id: user.id, name: user.name, email: user.email, role: user.role },
+        user: { id: user.id, name: user.name, email: user.email, role: user.role  },
       });
   } catch (err) {
     console.error(err.message);
