@@ -70,7 +70,6 @@ const loginUser = async (req, res) => {
 
   try {
     let user = await User.findOne({ email });
-    console.log(user);
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -82,8 +81,6 @@ const loginUser = async (req, res) => {
 
     const payload = { user: { id: user.id } };
     const token = jwt.sign(payload, process.env.jwtSecret, { expiresIn: "1h" });
-
-    console.log("token = ", token);
 
     res
       .cookie("token", token, {
