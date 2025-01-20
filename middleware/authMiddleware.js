@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.jwtSecret;
 
 const authMiddleware = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.cookies.jwt;
   if (!token) {
     return res.status(401).json({ message: 'No token, authorization denied' });
   }
