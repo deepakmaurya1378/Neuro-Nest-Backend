@@ -77,13 +77,12 @@ const loginUser = async (req, res) => {
     const payload = { user: { id: user.id } };
     const token = jwt.sign(payload, process.env.jwtSecret, { expiresIn: "1h" });
 
-    const isSecure = req.protocol === "https";
     res
       .cookie("token", token, {
         maxAge: 7 * 24 * 60 * 1000, 
         httpOnly: true,
-        sameSite: "strict", 
-        secure: isSecure ,
+        sameSite: "Strict", 
+        secure: true ,
       })
       .status(200)
       .json({
