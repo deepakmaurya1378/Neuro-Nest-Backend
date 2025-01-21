@@ -79,10 +79,10 @@ const loginUser = async (req, res) => {
 
     res
       .cookie("token", token, {
-        maxAge: 7 * 24 * 60 * 1000, 
-        httpOnly: true,
-        sameSite: "Strict", 
-        secure: true ,
+      httpOnly: true,
+      secure: req.secure || process.env.NODE_ENV === "production", 
+      maxAge: 3600000, 
+      sameSite: "None",
       })
       .status(200)
       .json({
